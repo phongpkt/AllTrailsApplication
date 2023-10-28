@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".hikingActivity.AddTrailActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/tool_bar" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trail Name*"
+                android:textStyle="italic"
+                android:textColor="@color/transparent_grey"
+                app:layout_constraintBottom_toTopOf="@+id/name"
+                app:layout_constraintStart_toStartOf="@+id/name"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="12"
+                android:inputType="textCapSentences"
+                android:minHeight="48dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/include"
+                tools:ignore="Autofill,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location*"
+                android:textStyle="italic"
+                android:textColor="@color/transparent_grey"
+                app:layout_constraintBottom_toTopOf="@+id/location"
+                app:layout_constraintStart_toStartOf="@+id/location"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="12"
+                android:inputType="textCapSentences"
+                android:minHeight="48dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name"
+                tools:ignore="Autofill,SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Created Date*"
+                android:textStyle="italic"
+                android:textColor="@color/transparent_grey"
+                app:layout_constraintBottom_toTopOf="@+id/date"
+                app:layout_constraintStart_toStartOf="@+id/date"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="12"
+                android:inputType="date"
+                android:minHeight="48dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/include"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/location"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Parking*"
+                android:textStyle="italic"
+                android:textColor="@color/transparent_grey"
+                app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+                app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                tools:ignore="HardcodedText" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/date">
+
+                <RadioButton
+                    android:id="@+id/rb_Yes"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:checked="true"
+                    android:textSize="16sp"
+                    android:text="@string/rb_yes" />
+
+                <RadioButton
+                    android:id="@+id/rb_No"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:checked="false"
+                    android:textSize="16sp"
+                    android:text="@string/rb_no" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Difficulty*"
+                android:textStyle="italic"
+                android:textColor="@color/transparent_grey"
+                app:layout_constraintBottom_toTopOf="@+id/difficulty"
+                app:layout_constraintStart_toStartOf="@+id/difficulty"
+                tools:ignore="HardcodedText" />
+
+            <Spinner
+                android:id="@+id/difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:entries="@array/difficulty"
+                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:spinnerMode="dropdown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textStyle="italic"
+                android:textColor="@color/transparent_grey"
+                app:layout_constraintBottom_toTopOf="@+id/description"
+                app:layout_constraintStart_toStartOf="@+id/description"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="12"
+                android:inputType="textCapSentences|textMultiLine"
+                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:lines="5"
+                android:gravity="bottom"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/difficulty"
+                tools:ignore="Autofill,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="280dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="40dp"
+                android:text="Add"
+                android:textSize="24dp"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

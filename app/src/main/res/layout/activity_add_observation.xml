@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".observationActivity.AddObservationActivity" >
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/tool_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please select an observation:"
+            android:textStyle="italic"
+            android:textColor="@color/transparent_grey"
+            android:textSize="20sp"/>
+
+        <Spinner
+            android:id="@+id/ob_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:minHeight="48dp"
+            android:spinnerMode="dropdown"
+            android:textSize="20sp"
+            android:entries="@array/observation_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Observation Date:"
+            android:textStyle="italic"
+            android:textColor="@color/transparent_grey"
+            android:textSize="20sp"/>
+
+
+        <EditText
+            android:id="@+id/ob_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:ems="12"
+            android:inputType="date"
+            android:minHeight="48dp"
+            android:textSize="20sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comment:"
+            android:textStyle="italic"
+            android:textColor="@color/transparent_grey"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/ob_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="12"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="48dp"
+            android:textSize="20sp"
+            android:lines="5"
+            android:gravity="bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="Autofill,SpeakableTextPresentCheck"/>
+
+        <Button
+            android:id="@+id/addBtn"
+            android:layout_width="280dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="40dp"
+            android:text="Add"
+            android:textSize="24sp"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ob_comment" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

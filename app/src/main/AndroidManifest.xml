@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AllTrailsApplication"
+        tools:targetApi="31">
+        <!-- ===========  Observation  =========== -->
+        <activity
+            android:name=".observationActivity.UpdateObservationActivity"
+            android:exported="false"
+            android:label="Update Observation"
+            android:parentActivityName=".hikingActivity.HikingActivity"/>
+        <activity
+            android:name=".observationActivity.AddObservationActivity"
+            android:exported="false"
+            android:label="Add Observation"
+            android:parentActivityName=".hikingActivity.HikingActivity"/>
+        <!-- ===========  User  =========== -->
+        <activity
+            android:name=".userActivity.UserActivity"
+            android:exported="false" />
+        <!-- ===========  Hike  =========== -->
+        <activity
+            android:name=".hikingActivity.HikingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".hikingActivity.AddTrailActivity"
+            android:exported="false"
+            android:label="Add Trail"
+            android:parentActivityName=".hikingActivity.HikingActivity" />
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".hikingActivity.HikingActivity" />
+
+        <activity
+            android:name=".hikingActivity.TrailDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".hikingActivity.HikingActivity" />
+        <activity
+            android:name=".hikingActivity.UpdateTrailActivity"
+            android:exported="false"
+            android:label="Update Trail"
+            android:parentActivityName=".hikingActivity.HikingActivity" /> <!-- ===========  Home  =========== -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="AllTrails">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
