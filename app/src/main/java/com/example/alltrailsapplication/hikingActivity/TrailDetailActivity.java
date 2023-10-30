@@ -22,13 +22,14 @@ import com.example.alltrailsapplication.adapter.ObservationAdapter;
 import com.example.alltrailsapplication.db.DatabaseHelper;
 import com.example.alltrailsapplication.db.entity.Observations;
 import com.example.alltrailsapplication.db.entity.Trails;
+import com.example.alltrailsapplication.db.entity.User;
 import com.example.alltrailsapplication.observationActivity.AddObservationActivity;
 
 import java.util.ArrayList;
 
 public class TrailDetailActivity extends AppCompatActivity {
     private DatabaseHelper db = new DatabaseHelper(this);
-    private TextView name_view, location_view, date_view, parking_view, difficulty_view, description_view;
+    private TextView name_view, location_view, date_view, parking_view, difficulty_view, description_view, trail_user;
     private String title;
     private RecyclerView recyclerView;
     private ArrayList<Observations> observationsArrayList = new ArrayList<>();
@@ -46,6 +47,7 @@ public class TrailDetailActivity extends AppCompatActivity {
         parking_view = findViewById(R.id.parking);
         difficulty_view = findViewById(R.id.difficulty);
         description_view = findViewById(R.id.description);
+        trail_user = findViewById(R.id.trail_user);
         Button update = findViewById(R.id.updateBtn);
         Button delete = findViewById(R.id.deleteBtn);
 
@@ -70,6 +72,7 @@ public class TrailDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(TrailDetailActivity.this, UpdateTrailActivity.class);
                 intent.putExtra("update_id", getIntent().getStringExtra("id"));
+                intent.putExtra("user_id", getIntent().getStringExtra("user_id"));
                 startActivity(intent);
             }
         });
@@ -87,6 +90,7 @@ public class TrailDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(TrailDetailActivity.this, AddObservationActivity.class);
                 intent.putExtra("trail_id", getIntent().getStringExtra("id"));
+                intent.putExtra("user_id", getIntent().getStringExtra("user_id"));
                 startActivity(intent);
             }
         });
@@ -94,6 +98,7 @@ public class TrailDetailActivity extends AppCompatActivity {
     public void getAndSetDetailData(){
         if(getIntent().hasExtra("id")){
             Trails trail = db.getTrail(Long.parseLong(getIntent().getStringExtra("id")));
+            User user = db.getUser(Long.parseLong(getIntent().getStringExtra("user_id")));
             title = trail.getName();
             name_view.setText(trail.getName());
             location_view.setText(trail.getLocation());
@@ -101,6 +106,7 @@ public class TrailDetailActivity extends AppCompatActivity {
             parking_view.setText(trail.getParking());
             difficulty_view.setText(trail.getDifficulty());
             description_view.setText(trail.getDescription());
+            trail_user.setText(user.getName());
         }else{
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
         }
@@ -113,7 +119,9 @@ public class TrailDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 db.deleteTrail(getIntent().getStringExtra("id"));
-                switchToActivity(HikingActivity.class);
+                Intent intent = new Intent(TrailDetailActivity.this, HikingActivity.class);
+                intent.putExtra("user_id", getIntent().getStringExtra("user_id"));
+                startActivity(intent);
                 finish();
             }
         });
@@ -125,10 +133,6 @@ public class TrailDetailActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
-    public void switchToActivity(Class<?> activityClass) {
-        Intent intent = new Intent(this, activityClass);
-        startActivity(intent);
-    }
     private void Toolbar() {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolBar);
@@ -138,7 +142,14 @@ public class TrailDetailActivity extends AppCompatActivity {
         }
     }
     @Override
-    public void onBackPressed(){
-        NavUtils.navigateUpFromSameTask(this);
+    public boolean onSupportNavigateUp() {
+        String userId = getIntent().getStringExtra("user_id");
+        if (userId != null) {
+            Intent upIntent = NavUtils.getParentActivityIntent(this);
+            upIntent.putExtra("user_id", userId);
+            NavUtils.navigateUpTo(this, upIntent);
+            return true;
+        }
+        return super.onSupportNavigateUp();
     }
 }

@@ -61,7 +61,6 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
                 android:text="Location:"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/trail_id"
                 app:layout_constraintTop_toBottomOf="@+id/trail_name_tv" />
 
@@ -72,9 +71,30 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:text="Tay ho"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/trail_location_tv"
                 app:layout_constraintTop_toBottomOf="@+id/trail_name" />
+
+            <TextView
+                android:id="@+id/trail_user_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:text="Created by:"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/trail_id"
+                app:layout_constraintTop_toBottomOf="@+id/trail_location_tv" />
+
+            <TextView
+                android:id="@+id/trail_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="userabcxyz"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/trail_location_tv"
+                app:layout_constraintTop_toBottomOf="@+id/trail_location" />
 
             <TextView
                 android:id="@+id/trail_difficulty"

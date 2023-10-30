@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.alltrailsapplication.db.entity.Observations;
 import com.example.alltrailsapplication.db.entity.Trails;
+import com.example.alltrailsapplication.db.entity.User;
 import com.example.alltrailsapplication.hikingActivity.AddTrailActivity;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "alltrails_db";
 
     public DatabaseHelper(@Nullable Context context) {
@@ -29,15 +30,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(Trails.CREATE_TABLE);
         sqLiteDatabase.execSQL(Observations.CREATE_TABLE);
+        sqLiteDatabase.execSQL(User.CREATE_TABLE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Trails.TABLE_NAME);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Observations.TABLE_NAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + User.TABLE_NAME);
         onCreate(sqLiteDatabase);
     }
 
-    public void insertTrail(String name, String location, String date, String parking, String difficulty, String description)
+    public void insertTrail(String name, String location, String date, String parking, String difficulty, String description, int user_id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -48,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Trails.COLUMN_PARKING, parking);
         values.put(Trails.COLUMN_DIFFICULTY, difficulty);
         values.put(Trails.COLUMN_DESCRIPTION, description);
+        values.put(Trails.COLUMN_USER, user_id);
 
         long id = db.insert(Trails.TABLE_NAME, null, values);
         if (id == -1){
@@ -109,7 +113,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         Trails.COLUMN_DATE,
                         Trails.COLUMN_PARKING,
                         Trails.COLUMN_DIFFICULTY,
-                        Trails.COLUMN_DESCRIPTION},
+                        Trails.COLUMN_DESCRIPTION,
+                        Trails.COLUMN_USER},
                 Trails.COLUMN_ID + "=?",
                 new String[]{
                         String.valueOf(id)
@@ -127,6 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_PARKING)),
                 cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_DIFFICULTY)),
                 cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_DESCRIPTION)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(Trails.COLUMN_USER)),
                 cursor.getInt(cursor.getColumnIndexOrThrow(Trails.COLUMN_ID))
         );
         cursor.close();
@@ -146,6 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 trail.setName(cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_NAME)));
                 trail.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_LOCATION)));
                 trail.setDifficulty(cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_DIFFICULTY)));
+                trail.setUser_id(cursor.getInt(cursor.getColumnIndexOrThrow(Trails.COLUMN_USER)));
                 trailsList.add(trail);
             }while (cursor.moveToNext());
         }
@@ -252,5 +259,101 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
         }
         db.close();
+    }
+    public void insertUserData(String name, String email, String password, String dob){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(User.COLUMN_NAME, name);
+        values.put(User.COLUMN_EMAIL, email);
+        values.put(User.COLUMN_PASSWORD, password);
+        values.put(User.COLUMN_DOB, dob);
+
+        long result = db.insert(User.TABLE_NAME, null, values);
+        if (result == -1) {
+            Toast.makeText(context, "Failed to create", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successfully created", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+    }
+    public Boolean checkEmailSignup(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + User.TABLE_NAME + " WHERE " +
+                User.COLUMN_EMAIL + " = ?", new String[]{email});
+        if(cursor.getCount() > 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public Boolean checkLogin(String email, String password){
+        SQLiteDatabase MyDatabase = this.getWritableDatabase();
+        Cursor cursor = MyDatabase.rawQuery("SELECT * FROM " + User.TABLE_NAME + " WHERE " +
+                User.COLUMN_EMAIL + " = ? AND " + User.COLUMN_PASSWORD + " = ?", new String[]{email, password});
+        if (cursor.getCount() > 0) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+    public User getUser(long id)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(User.TABLE_NAME,
+                new String[]{
+                        User.COLUMN_ID,
+                        User.COLUMN_NAME,
+                        User.COLUMN_DOB,
+                        User.COLUMN_EMAIL},
+                User.COLUMN_ID + "=?",
+                new String[]{
+                        String.valueOf(id)
+                },
+                null,
+                null,
+                null,
+                null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        User user = new User(
+                cursor.getString(cursor.getColumnIndexOrThrow(User.COLUMN_NAME)),
+                cursor.getString(cursor.getColumnIndexOrThrow(User.COLUMN_DOB)),
+                cursor.getString(cursor.getColumnIndexOrThrow(User.COLUMN_EMAIL)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(User.COLUMN_ID))
+        );
+        cursor.close();
+        return user;
+    }
+    public int getUserId(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + User.TABLE_NAME + " WHERE " +
+                User.COLUMN_EMAIL + " = ?", new String[]{email});
+        if (cursor != null)
+            cursor.moveToFirst();
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(User.COLUMN_ID));
+        cursor.close();
+        return id;
+    }
+    public ArrayList<Trails> getAllUserTrails(long user_id)
+    {
+        ArrayList<Trails> trailsList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM "+Trails.TABLE_NAME+" WHERE "+Trails.COLUMN_USER+" = "+ user_id
+                +" ORDER BY "+ Trails.COLUMN_ID;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery,null);
+        if(cursor.moveToFirst()){
+            do{
+                Trails trail = new Trails();
+                trail.setId(cursor.getInt(cursor.getColumnIndexOrThrow(Trails.COLUMN_ID)));
+                trail.setName(cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_NAME)));
+                trail.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_LOCATION)));
+                trail.setDifficulty(cursor.getString(cursor.getColumnIndexOrThrow(Trails.COLUMN_DIFFICULTY)));
+                trail.setUser_id(cursor.getInt(cursor.getColumnIndexOrThrow(Trails.COLUMN_USER)));
+                trailsList.add(trail);
+            }while (cursor.moveToNext());
+        }
+        db.close();
+        return trailsList;
     }
 }

@@ -27,6 +27,7 @@ import com.example.alltrailsapplication.R;
 import com.example.alltrailsapplication.adapter.HikingAdapter;
 import com.example.alltrailsapplication.db.DatabaseHelper;
 import com.example.alltrailsapplication.db.entity.Trails;
+import com.example.alltrailsapplication.db.entity.User;
 import com.example.alltrailsapplication.userActivity.UserActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -80,19 +81,16 @@ public class HikingActivity extends AppCompatActivity {
             recreate();
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.app_bar_menu, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int item_id = item.getItemId();
         if(item_id == R.id.delete_all){
-            Toast.makeText(this, "clicked on delete", Toast.LENGTH_SHORT).show();
-//            confirmDeleteDialog();
+            confirmDeleteDialog();
         }
         if(item_id == R.id.search){
             SearchView searchView = (SearchView) item.getActionView();
@@ -122,7 +120,6 @@ public class HikingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
     private void confirmDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete all trails");
@@ -159,6 +156,7 @@ public class HikingActivity extends AppCompatActivity {
     }
     public void switchToActivity(Class<?> activityClass) {
         Intent intent = new Intent(this, activityClass);
+        intent.putExtra("user_id", getIntent().getStringExtra("user_id"));
         startActivity(intent);
     }
 }

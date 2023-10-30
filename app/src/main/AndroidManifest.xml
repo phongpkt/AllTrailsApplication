@@ -17,16 +17,31 @@
             android:name=".observationActivity.UpdateObservationActivity"
             android:exported="false"
             android:label="Update Observation"
-            android:parentActivityName=".hikingActivity.HikingActivity"/>
+            android:parentActivityName=".hikingActivity.HikingActivity" />
         <activity
             android:name=".observationActivity.AddObservationActivity"
             android:exported="false"
             android:label="Add Observation"
-            android:parentActivityName=".hikingActivity.HikingActivity"/>
+            android:parentActivityName=".hikingActivity.HikingActivity" />
         <!-- ===========  User  =========== -->
         <activity
             android:name=".userActivity.UserActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="User Profile" />
+        <activity
+            android:name=".userActivity.SignupActivity"
+            android:exported="false"
+            android:label="Signup" />
+        <activity
+            android:name=".userActivity.LoginActivity"
+            android:exported="true"
+            android:label="Login" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <!-- ===========  Hike  =========== -->
         <activity
             android:name=".hikingActivity.HikingActivity"
@@ -35,30 +50,38 @@
             android:name=".hikingActivity.AddTrailActivity"
             android:exported="false"
             android:label="Add Trail"
-            android:parentActivityName=".hikingActivity.HikingActivity" />
+            android:parentActivityName=".hikingActivity.HikingActivity" >
 
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".hikingActivity.HikingActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".hikingActivity.HikingActivity" />
+
+        </activity>
 
         <activity
             android:name=".hikingActivity.TrailDetailActivity"
             android:exported="false"
-            android:parentActivityName=".hikingActivity.HikingActivity" />
+            android:parentActivityName=".hikingActivity.HikingActivity" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".hikingActivity.HikingActivity" />
+        </activity>
         <activity
             android:name=".hikingActivity.UpdateTrailActivity"
             android:exported="false"
             android:label="Update Trail"
-            android:parentActivityName=".hikingActivity.HikingActivity" /> <!-- ===========  Home  =========== -->
+            android:parentActivityName=".hikingActivity.HikingActivity" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".hikingActivity.HikingActivity" />
+        </activity>
+        <!-- ===========  Home  =========== -->
         <activity
             android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="AllTrails">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

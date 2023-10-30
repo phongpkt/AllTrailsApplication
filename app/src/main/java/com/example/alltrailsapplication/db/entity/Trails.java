@@ -11,7 +11,6 @@ public class Trails {
     public static final String COLUMN_DESCRIPTION = "trail_description";
     public static final String COLUMN_USER = "created_by";
 
-
     public static final String CREATE_TABLE =
             "CREATE TABLE " + TABLE_NAME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -21,6 +20,7 @@ public class Trails {
                     + COLUMN_PARKING + " TEXT,"
                     + COLUMN_DIFFICULTY + " TEXT,"
                     + COLUMN_DESCRIPTION + " TEXT,"
+                    + COLUMN_USER + " INTEGER"
                     + ")";
 
     private String name;
@@ -29,15 +29,17 @@ public class Trails {
     private String parking;
     private String difficulty;
     private String description;
+    private long user_id;
     private int id;
 
-    public Trails(String name, String location, String date, String parking, String difficulty, String description, int id) {
+    public Trails(String name, String location, String date, String parking, String difficulty, String description, long user_id, int id) {
         this.name = name;
         this.location = location;
         this.date = date;
         this.parking = parking;
         this.difficulty = difficulty;
         this.description = description;
+        this.user_id = user_id;
         this.id = id;
     }
 
@@ -90,6 +92,14 @@ public class Trails {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
     }
 
     public int getId() {

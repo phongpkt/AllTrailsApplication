@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NavUtils;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.widget.Toast;
 
 import com.example.alltrailsapplication.R;
 import com.example.alltrailsapplication.db.DatabaseHelper;
+import com.example.alltrailsapplication.hikingActivity.AddTrailActivity;
+import com.example.alltrailsapplication.hikingActivity.HikingActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -54,7 +58,9 @@ public class AddObservationActivity extends AppCompatActivity {
     }
     private void CreateObservation(String name, String date, String comment, int trail_id){
         db.createObservation(name, date, comment, trail_id);
-        onBackPressed();
+        Intent intent = new Intent(AddObservationActivity.this, HikingActivity.class);
+        intent.putExtra("user_id", getIntent().getStringExtra("user_id"));
+        startActivity(intent);
     }
     private void ToolBar() {
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar);
@@ -65,7 +71,14 @@ public class AddObservationActivity extends AppCompatActivity {
         }
     }
     @Override
-    public void onBackPressed(){
-        NavUtils.navigateUpFromSameTask(this);
+    public boolean onSupportNavigateUp() {
+        String userId = getIntent().getStringExtra("user_id");
+        if (userId != null) {
+            Intent upIntent = NavUtils.getParentActivityIntent(this);
+            upIntent.putExtra("user_id", userId);
+            NavUtils.navigateUpTo(this, upIntent);
+            return true;
+        }
+        return super.onSupportNavigateUp();
     }
 }

@@ -25,21 +25,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_baseline_add" />
-    <!--Scroll Layout-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view_trails"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="76dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/topAppBar" />
+        app:layout_constraintTop_toTopOf="@+id/topAppBar"
+        app:layout_constraintBottom_toBottomOf="@id/bottomNavigationBar">
 
-    <include
-        android:id="@+id/bottomNavigationBar"
-        layout="@layout/bottom_nav_bar"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="-35dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view_trails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/topAppBar" />
+
+    </ScrollView>
 
     <ImageView
         android:id="@+id/empty_imageView"
@@ -64,5 +69,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/empty_imageView" />
+    <include
+        android:id="@+id/bottomNavigationBar"
+        layout="@layout/bottom_nav_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.alltrailsapplication.R;
 import com.example.alltrailsapplication.db.DatabaseHelper;
 import com.example.alltrailsapplication.db.entity.Observations;
+import com.example.alltrailsapplication.hikingActivity.AddTrailActivity;
 import com.example.alltrailsapplication.hikingActivity.HikingActivity;
 
 public class UpdateObservationActivity extends AppCompatActivity {
@@ -94,7 +95,9 @@ public class UpdateObservationActivity extends AppCompatActivity {
         observation.setDate(date);
         observation.setComments(comments);
         db.updateObservation(observation);
-        onBackPressed();
+        Intent intent = new Intent(UpdateObservationActivity.this, HikingActivity.class);
+        intent.putExtra("user_id", getIntent().getStringExtra("user_id"));
+        startActivity(intent);
     }
     private void confirmDeleteDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -104,7 +107,9 @@ public class UpdateObservationActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 db.deleteObservation(String.valueOf(ob_id));
-                switchToActivity(HikingActivity.class);
+                Intent intent = new Intent(UpdateObservationActivity.this, HikingActivity.class);
+                intent.putExtra("user_id", getIntent().getStringExtra("user_id"));
+                startActivity(intent);
                 finish();
             }
         });
@@ -125,11 +130,14 @@ public class UpdateObservationActivity extends AppCompatActivity {
         }
     }
     @Override
-    public void onBackPressed(){
-        NavUtils.navigateUpFromSameTask(this);
-    }
-    public void switchToActivity(Class<?> activityClass) {
-        Intent intent = new Intent(this, activityClass);
-        startActivity(intent);
+    public boolean onSupportNavigateUp() {
+        String userId = getIntent().getStringExtra("user_id");
+        if (userId != null) {
+            Intent upIntent = NavUtils.getParentActivityIntent(this);
+            upIntent.putExtra("user_id", userId);
+            NavUtils.navigateUpTo(this, upIntent);
+            return true;
+        }
+        return super.onSupportNavigateUp();
     }
 }
